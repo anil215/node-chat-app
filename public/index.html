@@ -10,16 +10,6 @@
 
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <!-- loading the socket io libraray in an external file -->
-    <script type="text/javascript">
-      var socket = io();
-
-      socket.on('connect' , () => {
-        console.log('Connected to server');
-      });
-
-      socket.on('disconnect',() => {
-        console.log('Disconnected from server');
-      });
-    </script>
+    <script type="text/javascript" src="/js/index.js"></script>
   </body>
 </html>
