@@ -13,14 +13,13 @@ var io = socketIO(server); // ready to accept connections
 io.on('connection', (socket) => { // this socket is individual socket with which server is trigerred
   console.log('New User connected');
 
-  socket.emit('newMessage',{
-    from:'anilbit215@gmail.com',
-    text:'testing123',
-    createdAt : 'midnight'
-  });
-
+  // socket signifies an individual connected whicle io is used for everyone
   socket.on('createMessage', (data) => {
-    console.log('data is',data);
+    io.emit('newMessage',{
+      from :data.from,
+      text : data.text,
+      createdAt: new Date().getTime()
+    });
   });
 
 
