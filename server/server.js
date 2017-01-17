@@ -20,13 +20,9 @@ io.on('connection', (socket) => { // this socket is individual socket with which
   socket.broadcast.emit('newMessage',generateMessage('Admin','New User joined'));
 
   // socket signifies an individual connected whicle io is used for everyone
-  socket.on('createMessage', (data) => {
+  socket.on('createMessage', (data,callback) => {
     io.emit('newMessage',generateMessage(data.from,data.text));
-    // socket.broadcast.emit('newMessage',{
-    //   from :data.from,
-    //   text : data.text,
-    //   createdAt: new Date().getTime()
-    // })
+    callback('This is from the server');
   });
 
 
