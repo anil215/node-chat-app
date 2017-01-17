@@ -22,11 +22,12 @@ io.on('connection', (socket) => { // this socket is individual socket with which
   // socket signifies an individual connected whicle io is used for everyone
   socket.on('createMessage', (data,callback) => {
     io.emit('newMessage',generateMessage(data.from,data.text));
-    callback('This is from the server');
+    callback();
   });
 
   socket.on('createLocationMessage',(coords) => {
     io.emit('newLocationMessage',generateLocationMessage('Admin',coords.latitude,coords.longitude));
+    
   });
 
   socket.on('disconnect' ,() => {
