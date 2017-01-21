@@ -14,24 +14,28 @@ socket.on('disconnect', function(){
 socket.on('newMessage', function(data){
   var formattedTime = moment(data.createdAt).format('h:mm a');
 
-  console.log('Data ' , data);
-  var li = $('<li></li>');
-  li.text(`${data.from} ${formattedTime}: ${data.text}`);
+  var template = $('#message-template').html();
+  var html = Mustache.render(template,{
+    text:data.text,
+    from : data.from,
+    createdAt: formattedTime
+  });
 
-  $('#messages').append(li);
+  $('#messages').append(html);
+
 });
 
 socket.on('newLocationMessage',function(data) {
   var formattedTime = moment(data.createdAt).format('h:mm a');
 
-  var li = $('<li></li>');
-  var a = $('<a target="_blank">My current location</a>');
+  var template = $('#location-message-template').html();
+  var html = Mustache.render(template,{
+    from:data.from,
+    createdAt:formattedTime,
+    url: data.url
+  });
 
-  li.text(`${data.from} ${formattedTime}: `);
-  a.attr('href',data.url);
-  li.append(a);
-
-  $('#messages').append(li);
+  $('#messages').append(html);
 });
 
 $('#message-form').on('submit',function(e) {
