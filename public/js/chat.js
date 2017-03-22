@@ -16,8 +16,16 @@ function scrollToBottom() {
 }
 
 socket.on('connect' , function(){
-  console.log('Connected to server');
-  // you should emit events to server once the connection is established
+  var params = jQuery.deparam(window.location.search);
+
+  socket.emit('join', params , function(err) {
+    if(err){
+      alert(err);
+      window.location.href='/';
+    } else {
+      console.log('no error');
+    }
+  });
 
 });
 

@@ -4,6 +4,7 @@ const express = require('express');
 const socketIO = require('socket.io');
 
 const {generateMessage , generateLocationMessage} = require('./utils/message');
+const {isRealString} = require('./utils/validation');
 var app = express();
 const publicPath = path.join(__dirname , '../public');
 const port = process.env.PORT || 3000;
@@ -19,6 +20,13 @@ io.on('connection', (socket) => { // this socket is individual socket with which
   // alerts everyone but the user sending the message
   socket.broadcast.emit('newMessage',generateMessage('Admin','New User joined'));
 
+  socket.on('join',(params,callback) => {
+    if(!isRealString(params.name) || !isRealString(params.room)){
+      callback('Name and room name are required');
+    }
+    callback();
+  });
+
   // socket signifies an individual connected whicle io is used for everyone
   socket.on('createMessage', (data,callback) => {
     io.emit('newMessage',generateMessage(data.from,data.text));
@@ -27,7 +35,7 @@ io.on('connection', (socket) => { // this socket is individual socket with which
 
   socket.on('createLocationMessage',(coords) => {
     io.emit('newLocationMessage',generateLocationMessage('Admin',coords.latitude,coords.longitude));
-    
+
   });
 
   socket.on('disconnect' ,() => {
