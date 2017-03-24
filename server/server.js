@@ -35,7 +35,7 @@ io.on('connection', (socket) => { // this socket is individual socket with which
     var usernames = users.getUserList(params.room);
     for(var i=0;i<usernames.length;i++){
       if(usernames[i] === params.name){
-         callback('Name already taken!!');
+        return callback('Name already taken!!');
       }
     }
     users.removeUser(socket.id);
