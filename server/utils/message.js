@@ -1,10 +1,15 @@
 var moment = require('moment');
 
-var generateMessage = (from,text) => {
+var generateMessage = (from,text,at) => {
+  if(!at){
+    createdAt = moment().valueOf();
+  } else {
+    createdAt = at;
+  }
   return {
     from : from,
     text : text,
-    createdAt : moment().valueOf()
+    createdAt : createdAt
   }
 };
 
